@@ -12,13 +12,13 @@ BIN = bin/gui bin/ai bin/server
 all: $(BIN)
 
 bin/gui: gui.o netclient.o net.o gamelogic.o
-	$(CC) $(DEFINES) -lm -Wall -lcurses -o bin/gui gui.c netclient.o net.o gamelogic.o
+	$(CC) $(DEFINES) -Wall -o bin/gui gui.c netclient.o net.o gamelogic.o -lm -lcurses
 
 bin/ai: ai.o netclient.o net.o gamelogic.o
-	$(CC) $(DEFINES) -lm -Wall -o bin/ai ai.c netclient.o net.o gamelogic.o
+	$(CC) $(DEFINES) -Wall -o bin/ai ai.c netclient.o net.o gamelogic.o -lm
 
 bin/server: server.o net.o gamelogic.o
-	$(CC) $(DEFINES) -lm -Wall -o bin/server server.c net.o gamelogic.o
+	$(CC) $(DEFINES) -Wall -o bin/server server.c net.o gamelogic.o -lm
 
 clean:
 	rm -rf *~ *.ko *.o *.mod.c .*cmd .tmp_versions $(BIN)
