@@ -1,0 +1,51 @@
+# Project: 4gewinnt
+# Makefile created by Dev-C++ 4.9.9.2
+
+CC   = gcc.exe
+OBJ  = ai.o gamelogic.o gui.o net.o netclient.o server.o
+LIBS =  -L"C:/Programme/Dev-Cpp/lib" -lcurses "C:/Programme/Dev-Cpp/lib/libws2_32.a"
+INCS =  -I"C:/Programme/Dev-Cpp/include" 
+BIN  = bin/gui.exe bin/server.exe bin/ai.exe
+CFLAGS = $(INCS) $(DEFINES)
+RM = rm -f
+
+ifeq ($(DEBUG),1)
+DEFINES = -DDEBUG
+else
+DEFINES = 
+endif
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+bin/gui.exe: basename.o gamelogic.o gui.o netclient.o net.o
+	$(CC) $(DEFINES) basename.o gamelogic.o netclient.o net.o -o "bin/gui.exe" gui.o $(LIBS)
+
+bin/server.exe: basename.o gamelogic.o net.o server.o
+	$(CC) $(DEFINES) basename.o gamelogic.o net.o -o "bin/server.exe" server.o $(LIBS)
+
+bin/ai.exe: basename.o gamelogic.o netclient.o net.o ai.o
+	$(CC) $(DEFINES) basename.o gamelogic.o netclient.o net.o -o "bin/ai.exe" ai.o $(LIBS)
+
+ai.o: ai.c
+	$(CC) -c ai.c -o ai.o $(CFLAGS)
+
+gamelogic.o: gamelogic.c
+	$(CC) -c gamelogic.c -o gamelogic.o $(CFLAGS)
+
+gui.o: gui.c
+	$(CC) -c gui.c -o gui.o $(CFLAGS)
+
+net.o: net.c
+	$(CC) -c net.c -o net.o $(CFLAGS)
+
+netclient.o: netclient.c
+	$(CC) -c netclient.c -o netclient.o $(CFLAGS)
+
+server.o: server.c
+	$(CC) -c server.c -o server.o $(CFLAGS)
